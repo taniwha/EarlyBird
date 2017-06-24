@@ -1,0 +1,8 @@
+#! /bin/sh
+
+ver=`Source/git-version-gen --prefix v .tarball-version`
+make GAMEDATA=`pwd`/tmp install
+cd tmp
+zip -r9 ../EarlyBird_v${ver}.zip EarlyBird
+cd ..
+rm -rf tmp

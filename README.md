@@ -1,4 +1,4 @@
-#Early Bird
+# Early Bird
 Early Bird is a KSP mod for better warp-to-morning functionality.
 Currently, it modifies the warp-to-morning feature such that warp ends five
 minutes before sunrise, taking the space center latitude into account (not

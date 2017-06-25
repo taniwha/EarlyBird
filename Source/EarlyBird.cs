@@ -43,7 +43,7 @@ namespace EarlyBird {
 	{
 		internal static EarlyBird instance;
 
-		static double DawnOffset = -5;
+		public static double DawnOffset = -5;
 
 		CelestialBody sun;
 

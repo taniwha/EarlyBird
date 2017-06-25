@@ -74,9 +74,30 @@ namespace EarlyBird {
 			gui_enabled = !gui_enabled;
 		}
 
+		string dawnOffset;
+		void DawnOffset ()
+		{
+			GUILayout.BeginHorizontal ();
+			GUILayout.Label ("Dawn Offset:");
+
+			if (string.IsNullOrEmpty (dawnOffset)) {
+				dawnOffset = EarlyBird.DawnOffset.ToString ();
+			}
+			dawnOffset = GUILayout.TextField(dawnOffset, GUILayout.Width (40));
+			double offs;
+			if (double.TryParse (dawnOffset, out offs)) {
+				EarlyBird.DawnOffset = offs;
+			}
+
+			GUILayout.Label ("minutes (+ve = later)");
+			GUILayout.EndHorizontal ();
+		}
+
 		void WindowGUI (int windowID)
 		{
 			GUILayout.BeginVertical ();
+
+			DawnOffset ();
 
 			if (GUILayout.Button ("OK")) {
 				gui_enabled = false;

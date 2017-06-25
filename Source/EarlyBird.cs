@@ -88,9 +88,10 @@ namespace EarlyBird {
 				rotPeriod = body.orbit.period * rotPeriod / (body.orbit.period - rotPeriod);
 			}
 
+			double offset = (DawnOffset * 60) / rotPeriod;
 			double dayLength = Sunrise.GetDayLength (lat, body, sun);
-			double timeOfDawn = 0.5 - dayLength / 2;
-			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1) + 10 + DawnOffset * 60;
+			double timeOfDawn = 0.5 - dayLength / 2 + offset;;
+			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1);
 			Debug.LogFormat("[EarlyBird] WarpToMorning: daylight: {0}({1}), dawn {2}, warpTime: {3}", dayLength, dayLength * rotPeriod, timeOfDawn, timeToDaylight);
 			TimeWarp.fetch.WarpTo (Planetarium.GetUniversalTime () + timeToDaylight, 8, 1);
 		}

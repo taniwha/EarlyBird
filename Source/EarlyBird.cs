@@ -111,8 +111,11 @@ namespace EarlyBird {
 
 		IEnumerator HijackWarpToMorning ()
 		{
-			yield return null;
-			GameObject go = GameObject.Find ("WarpToMorning");
+			GameObject go;
+			do {
+				yield return null;
+				go = GameObject.Find ("WarpToMorning");
+			} while (go == null);
 			var wtm = go.GetComponentInChildren<UIWarpToNextMorning>();
 			wtm.button.onClick.RemoveAllListeners ();
 			wtm.button.onClick.AddListener (WarpToMorning);

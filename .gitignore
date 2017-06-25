@@ -3,6 +3,7 @@
 *.dll.mdb
 *.orig
 *.userprefs
+*.png
 *.suo
 *.zip
 *.sln

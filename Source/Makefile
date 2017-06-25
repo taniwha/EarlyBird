@@ -9,7 +9,10 @@ TARGETS		:= EarlyBird.dll
 EB_FILES := \
     AssemblyInfo.cs	\
 	EarlyBird.cs \
+	FlightWindow.cs \
+	Settings.cs \
 	Sunrise.cs \
+	Toolbar.cs \
 	VersionReport.cs \
 	$e
 

@@ -33,6 +33,7 @@ namespace EarlyBird {
 		private static bool hide_ui;
 
 		static EB_FlightWindow instance;
+		public static double DawnOffset;
 
 		public static void ToggleGUI ()
 		{
@@ -80,7 +81,6 @@ namespace EarlyBird {
 			instance = this;
 			GameEvents.onHideUI.Add (onHideUI);
 			GameEvents.onShowUI.Add (onShowUI);
-			enabled = false;
 		}
 		
 		void Start ()
@@ -92,34 +92,48 @@ namespace EarlyBird {
 		{
 			GUILayout.BeginVertical ();
 
+			Vessel vessel = FlightGlobals.ActiveVessel;
+			if (vessel.situation != Vessel.Situations.LANDED
+				&& vessel.situation != Vessel.Situations.SPLASHED
+				&& vessel.situation != Vessel.Situations.PRELAUNCH) {
+				GUILayout.Label("mobile warp-to-morning not yet implemented");
+				GUILayout.Label("Someday ;)");
+			} else {
+				EB_Settings.DawnOffset (ref DawnOffset);
+				if (GUILayout.Button ("Warp to Morning")) {
+					EarlyBird.WarpToMorning (vessel.latitude,
+											 vessel.longitude,
+											 vessel.mainBody,
+											 DawnOffset);
+				}
+			}
+
 			GUILayout.EndVertical ();
 			GUI.DragWindow (new Rect (0, 0, 10000, 20));
 		}
 
 		void OnGUI ()
 		{
-			if (enabled) { // don't do any work at all unless we're enabled
-				if (gui_enabled) { // don't create windows unless we're going to show them
-					GUI.skin = HighLogic.Skin;
-					if (windowpos.x == 0) {
-						windowpos = new Rect (Screen.width / 2 - 250,
-							Screen.height / 2 - 30, 0, 0);
-					}
-					string name = "Early Bird";
-					string ver = EarlyBirdVersionReport.GetVersion ();
-					windowpos = GUILayout.Window (GetInstanceID (),
-						windowpos, WindowGUI,
-						name + " " + ver,
-						GUILayout.Width (500));
-					if (windowpos.Contains (new Vector2 (Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
-						InputLockManager.SetControlLock ("EB_Flight_window_lock");
-					} else {
-						InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
-					}
+			if (gui_enabled) { // don't create windows unless we're going to show them
+				GUI.skin = HighLogic.Skin;
+				if (windowpos.x == 0) {
+					windowpos = new Rect (Screen.width / 2 - 250,
+						Screen.height / 2 - 30, 0, 0);
+				}
+				string name = "Early Bird";
+				string ver = EarlyBirdVersionReport.GetVersion ();
+				windowpos = GUILayout.Window (GetInstanceID (),
+					windowpos, WindowGUI,
+					name + " " + ver,
+					GUILayout.Width (500));
+				if (windowpos.Contains (new Vector2 (Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
+					InputLockManager.SetControlLock ("EB_Flight_window_lock");
 				} else {
 					InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
 				}
+			} else {
+				InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
 			}
-		}
+			}
 	}
 }

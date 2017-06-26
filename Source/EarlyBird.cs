@@ -57,12 +57,13 @@ namespace EarlyBird {
 			instance = null;
 		}
 
-		void WarpToMorning ()
+		public static void WarpToMorning (double lat, double lon,
+										  CelestialBody body, double offset)
 		{
 			if (FlightDriver.Pause) {
 			 	return;
 			}
-			if (sun == null) {
+			if (instance.sun == null) {
 				Debug.LogError ("Cannot warp to next morning due to lack of sun");
 				return;
 			}
@@ -73,6 +74,23 @@ namespace EarlyBird {
 
 			double rotPeriod, localTime;
 
+			localTime = Sunrise.GetLocalTime (lon, body, instance.sun);
+			rotPeriod = body.rotationPeriod;
+			if (body.orbit != null) {
+				rotPeriod = body.orbit.period * rotPeriod / (body.orbit.period - rotPeriod);
+			}
+
+			offset = (offset * 60) / rotPeriod;
+			double dayLength = Sunrise.GetDayLength (lat, body, instance.sun);
+			double timeOfDawn = 0.5 - dayLength / 2 + offset;;
+			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1);
+			Debug.LogFormat("[EarlyBird] WarpToMorning: daylight: {0}({1}), dawn {2}, warpTime: {3}", dayLength, dayLength * rotPeriod, timeOfDawn, timeToDaylight);
+			TimeWarp.fetch.WarpTo (Planetarium.GetUniversalTime () + timeToDaylight, 8, 1);
+		}
+
+		void WarpToMorning ()
+		{
+
 			double lat = -0.0917535863160035;
 			double lon = 285.37030688110428;
 			CelestialBody body = FlightGlobals.GetHomeBody();
@@ -81,19 +99,7 @@ namespace EarlyBird {
 				lat = SpaceCenter.Instance.Latitude;
 				lon = SpaceCenter.Instance.Longitude;
 			}
-
-			localTime = Sunrise.GetLocalTime (lon, body, sun);
-			rotPeriod = body.rotationPeriod;
-			if (body.orbit != null) {
-				rotPeriod = body.orbit.period * rotPeriod / (body.orbit.period - rotPeriod);
-			}
-
-			double offset = (DawnOffset * 60) / rotPeriod;
-			double dayLength = Sunrise.GetDayLength (lat, body, sun);
-			double timeOfDawn = 0.5 - dayLength / 2 + offset;;
-			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1);
-			Debug.LogFormat("[EarlyBird] WarpToMorning: daylight: {0}({1}), dawn {2}, warpTime: {3}", dayLength, dayLength * rotPeriod, timeOfDawn, timeToDaylight);
-			TimeWarp.fetch.WarpTo (Planetarium.GetUniversalTime () + timeToDaylight, 8, 1);
+			WarpToMorning (lat, lon, body, DawnOffset);
 		}
 
 /*

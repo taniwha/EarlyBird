@@ -61,6 +61,10 @@ namespace EarlyBird {
 		{
 			//Debug.Log (String.Format ("[EarlyBird] Settings save: {0}", config));
 			var settings = new ConfigNode ("Settings");
+			var dawnOffset = new ConfigNode ("DawnOffset");
+			dawnOffset.AddValue ("Flight", EB_FlightWindow.DawnOffset);
+			dawnOffset.AddValue ("SpaceCenter", EarlyBird.DawnOffset);
+			settings.AddNode (dawnOffset);
 			config.AddNode (settings);
 		}
 		
@@ -74,19 +78,20 @@ namespace EarlyBird {
 			gui_enabled = !gui_enabled;
 		}
 
-		string dawnOffset;
-		void DawnOffset ()
+		static string dawnOffsetStr;
+		public static void DawnOffset (ref double dawnOffset)
 		{
 			GUILayout.BeginHorizontal ();
 			GUILayout.Label ("Dawn Offset:");
 
-			if (string.IsNullOrEmpty (dawnOffset)) {
-				dawnOffset = EarlyBird.DawnOffset.ToString ();
+			if (string.IsNullOrEmpty (dawnOffsetStr)) {
+				dawnOffsetStr = dawnOffset.ToString ();
 			}
-			dawnOffset = GUILayout.TextField(dawnOffset, GUILayout.Width (40));
+			dawnOffsetStr = GUILayout.TextField(dawnOffsetStr,
+												GUILayout.Width (40));
 			double offs;
-			if (double.TryParse (dawnOffset, out offs)) {
-				EarlyBird.DawnOffset = offs;
+			if (double.TryParse (dawnOffsetStr, out offs)) {
+				dawnOffset = offs;
 			}
 
 			GUILayout.Label ("minutes (+ve = later)");
@@ -97,7 +102,7 @@ namespace EarlyBird {
 		{
 			GUILayout.BeginVertical ();
 
-			DawnOffset ();
+			DawnOffset (ref EarlyBird.DawnOffset);
 
 			if (GUILayout.Button ("OK")) {
 				gui_enabled = false;

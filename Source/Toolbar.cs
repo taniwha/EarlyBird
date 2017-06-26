@@ -76,12 +76,12 @@ namespace EarlyBird {
 	{
 		public void Awake ()
 		{
-			EB_AppButton.Toggle += EB_Settings.ToggleGUI;
+			EB_AppButton.Toggle += EarlyBird_Settings.ToggleGUI;
 		}
 
 		void OnDestroy()
 		{
-			EB_AppButton.Toggle -= EB_Settings.ToggleGUI;
+			EB_AppButton.Toggle -= EarlyBird_Settings.ToggleGUI;
 		}
 	}
 
@@ -104,12 +104,12 @@ namespace EarlyBird {
 	{
 		public void Awake ()
 		{
-			EB_AppButton.Toggle += EB_Settings.ToggleGUI;
+			EB_AppButton.Toggle += EarlyBird_Settings.ToggleGUI;
 		}
 
 		void OnDestroy()
 		{
-			EB_AppButton.Toggle -= EB_Settings.ToggleGUI;
+			EB_AppButton.Toggle -= EarlyBird_Settings.ToggleGUI;
 		}
 	}
 }

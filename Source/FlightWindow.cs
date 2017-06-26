@@ -99,7 +99,7 @@ namespace EarlyBird {
 				GUILayout.Label("mobile warp-to-morning not yet implemented");
 				GUILayout.Label("Someday ;)");
 			} else {
-				EB_Settings.DawnOffset (ref DawnOffset);
+				EarlyBird_Settings.DawnOffset (ref DawnOffset);
 				if (GUILayout.Button ("Warp to Morning")) {
 					EarlyBird.WarpToMorning (vessel.latitude,
 											 vessel.longitude,

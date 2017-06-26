@@ -30,16 +30,16 @@ namespace EarlyBird {
 			GameScenes.TRACKSTATION,
 		})
 	]
-	public class EB_Settings : ScenarioModule
+	public class EarlyBird_Settings : ScenarioModule
 	{
 		static Rect windowpos;
 		private static bool gui_enabled;
 
-		public static EB_Settings current
+		static void ParseOffset (string offstr, ref double offset)
 		{
-			get {
-				var game = HighLogic.CurrentGame;
-				return game.scenarios.Select (s => s.moduleRef).OfType<EB_Settings> ().SingleOrDefault ();
+			double off;
+			if (double.TryParse (offstr, out off)) {
+				offset = off;
 			}
 		}
 

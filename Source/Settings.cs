@@ -51,6 +51,12 @@ namespace EarlyBird {
 				settings = new ConfigNode ("Settings");
 				gui_enabled = true; // Show settings window on first startup
 			}
+			var dawnOffset = settings.GetNode("DawnOffset");
+			if (dawnOffset == null) {
+				dawnOffset = new ConfigNode ("DawnOffset");
+			}
+			ParseOffset (dawnOffset.GetValue ("Flight"), ref EB_FlightWindow.DawnOffset);
+			ParseOffset (dawnOffset.GetValue ("SpaceCenter"), ref EarlyBird.DawnOffset);
 
 			if (HighLogic.LoadedScene == GameScenes.SPACECENTER) {
 				enabled = true;

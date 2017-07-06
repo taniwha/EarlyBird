@@ -82,6 +82,13 @@ namespace EarlyBird {
 			GameEvents.onHideUI.Add (onHideUI);
 			GameEvents.onShowUI.Add (onShowUI);
 		}
+
+		void OnDestroy ()
+		{
+			instance = null;
+			GameEvents.onHideUI.Remove (onHideUI);
+			GameEvents.onShowUI.Remove (onShowUI);
+		}
 		
 		void Start ()
 		{

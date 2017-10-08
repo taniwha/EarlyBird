@@ -92,7 +92,7 @@ namespace EarlyBird {
 		
 		void Start ()
 		{
-			enabled = false;
+			UpdateGUIState ();
 		}
 
 		void WindowGUI (int windowID)
@@ -141,6 +141,6 @@ namespace EarlyBird {
 			} else {
 				InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
 			}
-			}
+		}
 	}
 }

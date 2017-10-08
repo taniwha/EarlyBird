@@ -102,20 +102,6 @@ namespace EarlyBird {
 			WarpToMorning (lat, lon, body, DawnOffset);
 		}
 
-/*
-		void Window (int windowID)
-		{
-		}
-
-		static Rect winpos;
-		void OnGUI ()
-		{
-			winpos = GUILayout.Window (GetInstanceID (), winpos, Window,
-									   "Early Bird",
-									   GUILayout.MinWidth (200));
-		}
-*/
-
 		IEnumerator HijackWarpToMorning ()
 		{
 			GameObject go;

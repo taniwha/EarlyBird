@@ -1,10 +1,11 @@
-KSPDIR		:= ${HOME}/ksp/KSP_linux
-MANAGED		:= ${KSPDIR}/KSP_Data/Managed
-GAMEDATA	:= ${KSPDIR}/GameData
-EBGAMEDATA  := ${GAMEDATA}/EarlyBird
-PLUGINDIR	:= ${EBGAMEDATA}/Plugins
+export MODNAME		:= EarlyBird
+export KSPDIR		:= ${HOME}/ksp/KSP_linux
+export MANAGED		:= ${KSPDIR}/KSP_Data/Managed
+export GAMEDATA		:= ${KSPDIR}/GameData
+export MODGAMEDATA	:= ${GAMEDATA}/${MODNAME}
+export PLUGINDIR	:= ${MODGAMEDATA}/Plugins
 
-TARGETS		:= EarlyBird.dll
+TARGETS		:= ${MODNAME}.dll
 
 EB_FILES := \
     AssemblyInfo.cs	\
@@ -31,7 +32,7 @@ all: version ${TARGETS} #EarlyBird.png
 
 .PHONY: version
 version:
-	@./git-version.sh
+	@../tools/git-version.sh
 
 info:
 	@echo "EarlyBird Build Information"
@@ -49,15 +50,12 @@ EarlyBird.dll: ${EB_FILES}
 		-r:UnityEngine,UnityEngine.UI \
 		-out:$@ $^
 
-EarlyBird.png: EarlyBird.svg
-	inkscape --export-png $@ $^
-
 clean:
-	rm -f ${TARGETS} AssemblyInfo.cs EarlyBird.png
+	rm -f ${TARGETS} AssemblyInfo.cs ${MODNAME}.version
 
 install: all
 	mkdir -p ${PLUGINDIR}
-	cp ${TARGETS} ${PLUGINDIR}
-#	cp ${DOC_FILES} ${EBGAMEDATA}
+	cp ${TARGETS} ${MODNAME}.version ${PLUGINDIR}
+#	cp ${DOC_FILES} ${MODGAMEDATA}
 
 .PHONY: all clean install

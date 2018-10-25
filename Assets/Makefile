@@ -1,6 +1,7 @@
+MODNAME		:= EarlyBird
 KSPDIR		:= ${HOME}/ksp/KSP_linux
-GAMEDATA	:= ${KSPDIR}/GameData
-EBGAMEDATA  := ${GAMEDATA}/EarlyBird
+GAMEDATA	:= ${KSPDIR}/${MODNAME}
+MODGAMEDATA	:= ${GAMEDATA}/EarlyBird
 
 RESGEN2		:= resgen2
 GMCS		:= gmcs
@@ -29,7 +30,7 @@ clean:
 	rm -f EarlyBird_icon.png
 
 install: all
-	mkdir -p ${EBGAMEDATA}/Textures
-	cp EarlyBird_icon.png ${EBGAMEDATA}/Textures
+	mkdir -p ${MODGAMEDATA}/Textures
+	cp EarlyBird_icon.png ${MODGAMEDATA}/Textures
 
 .PHONY: all clean install

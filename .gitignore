@@ -1,4 +1,5 @@
 .DS_Store
+*.version
 *.dll
 *.dll.mdb
 *.orig

@@ -32,6 +32,6 @@ cat > EarlyBird.version <<EOF
 	"URL":"http://taniwha.org/~bill/EarlyBird.version",
 	"DOWNLOAD":"http://taniwha.org/~bill/EarlyBird_v$full_version.zip",
 	"VERSION":{"MAJOR":$MAJOR,"MINOR":$MINOR,"PATCH":$PATCH,"BUILD":$BUILD},
-	"KSP_VERSION":{"MAJOR":$KSPMAJOR,"MINOR":$KSPMINOR,"PATCH":$KSPPATCH}
 }
 EOF
+#	"KSP_VERSION":{"MAJOR":$KSPMAJOR,"MINOR":$KSPMINOR,"PATCH":$KSPPATCH}

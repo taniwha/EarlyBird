@@ -1,7 +1,7 @@
 MODNAME		:= EarlyBird
 KSPDIR		:= ${HOME}/ksp/KSP_linux
-GAMEDATA	:= ${KSPDIR}/${MODNAME}
-MODGAMEDATA	:= ${GAMEDATA}/EarlyBird
+GAMEDATA	:= ${KSPDIR}/GameData
+MODGAMEDATA	:= ${GAMEDATA}/${MODNAME}
 
 RESGEN2		:= resgen2
 GMCS		:= gmcs

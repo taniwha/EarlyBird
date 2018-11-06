@@ -127,11 +127,9 @@ namespace EarlyBird {
 						windowpos = new Rect (Screen.width / 2 - 250,
 							Screen.height / 2 - 30, 0, 0);
 					}
-					string name = "Early Bird";
 					string ver = EarlyBirdVersionReport.GetVersion ();
 					windowpos = GUILayout.Window (GetInstanceID (),
-						windowpos, WindowGUI,
-						name + " " + ver,
+						windowpos, WindowGUI, ver,
 						GUILayout.Width (500));
 					if (windowpos.Contains (new Vector2 (Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
 						InputLockManager.SetControlLock ("EB_Settings_window_lock");

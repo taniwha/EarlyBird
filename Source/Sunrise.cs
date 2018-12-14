@@ -55,7 +55,7 @@ namespace EarlyBird {
 			double tand = sunY / sunX;
 			double tanp = Math.Tan (lat * Math.PI / 180);
 			double cosw = -tanp * tand;
-			Debug.LogFormat ("[Sunrise] GetDayLength: lat {0} sun dec {1} cosw {2} ({3} {4})", lat, Math.Atan (tand) * 180 / Math.PI, cosw, body.name, sun.name);
+			Debug.Log ($"[Sunrise] GetDayLength: lat {lat} sun dec {Math.Atan (tand) * 180 / Math.PI} cosw {cosw} ({body.name} {sun.name})");
 			if (cosw < -1) {
 				return 1;
 			} else if (cosw > 1) {

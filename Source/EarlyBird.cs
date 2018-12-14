@@ -76,15 +76,21 @@ namespace EarlyBird {
 
 			localTime = Sunrise.GetLocalTime (lon, body, instance.sun);
 			rotPeriod = body.rotationPeriod;
-			if (body.orbit != null) {
-				rotPeriod = body.orbit.period * rotPeriod / (body.orbit.period - rotPeriod);
+			var orbit = body.orbit;
+			while (orbit?.referenceBody != instance.sun) {
+				orbit = orbit.referenceBody.orbit;
+			}
+			if (orbit != null) {
+				double or = rotPeriod;
+				rotPeriod = orbit.period * rotPeriod / (orbit.period - rotPeriod);
+				Debug.Log($"[EarlyBird] rotation period: {or} reference period: {orbit.period} day length: {rotPeriod}");
 			}
 
 			offset = (offset * 60) / rotPeriod;
 			double dayLength = Sunrise.GetDayLength (lat, body, instance.sun);
-			double timeOfDawn = 0.5 - dayLength / 2 + offset;;
+			double timeOfDawn = 0.5 - dayLength / 2 + offset;
 			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1);
-			Debug.LogFormat("[EarlyBird] WarpToMorning: daylight: {0}({1}), dawn {2}, warpTime: {3}", dayLength, dayLength * rotPeriod, timeOfDawn, timeToDaylight);
+			Debug.Log($"[EarlyBird] WarpToMorning: daylight: {dayLength}({dayLength * rotPeriod}), dawn {timeOfDawn}, warpTime: {timeToDaylight}");
 			TimeWarp.fetch.WarpTo (Planetarium.GetUniversalTime () + timeToDaylight, 8, 1);
 		}
 

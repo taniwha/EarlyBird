@@ -107,12 +107,18 @@ namespace EarlyBird {
 				GUILayout.Label("Someday ;)");
 			} else {
 				EarlyBird_Settings.DawnOffset (ref DawnOffset);
+				GUILayout.BeginHorizontal ();
 				if (GUILayout.Button ("Warp to Morning")) {
 					EarlyBird.WarpToMorning (vessel.latitude,
 											 vessel.longitude,
 											 vessel.mainBody,
 											 DawnOffset);
 				}
+				GUILayout.FlexibleSpace ();
+				if (GUILayout.Button ("Close")) {
+					HideGUI ();
+				}
+				GUILayout.EndHorizontal ();
 			}
 
 			GUILayout.EndVertical ();

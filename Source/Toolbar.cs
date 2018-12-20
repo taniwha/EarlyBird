@@ -72,7 +72,7 @@ namespace EarlyBird {
 	}
 
 	[KSPAddon (KSPAddon.Startup.TrackingStation, false)]
-	public class EBToolbar_ShipInfo : MonoBehaviour
+	public class EBToolbar_TrackingStation : MonoBehaviour
 	{
 		public void Awake ()
 		{
@@ -86,7 +86,7 @@ namespace EarlyBird {
 	}
 
 	[KSPAddon (KSPAddon.Startup.Flight, false)]
-	public class EBToolbar_BuildWindow : MonoBehaviour
+	public class EBToolbar_Flight : MonoBehaviour
 	{
 		public void Awake ()
 		{
@@ -100,7 +100,7 @@ namespace EarlyBird {
 	}
 
 	[KSPAddon (KSPAddon.Startup.SpaceCentre, false)]
-	public class EBToolbar_SettingsWindow : MonoBehaviour
+	public class EBToolbar_SpaceCenter : MonoBehaviour
 	{
 		public void Awake ()
 		{

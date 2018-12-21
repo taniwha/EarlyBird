@@ -35,6 +35,16 @@ namespace EarlyBird {
 		static EB_FlightWindow instance;
 		public static double DawnOffset;
 
+		private static void SetInputLock ()
+		{
+			InputLockManager.SetControlLock ("EB_Flight_window_lock");
+		}
+
+		private static void RemoveInputLock ()
+		{
+			InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
+		}
+
 		public static void ToggleGUI ()
 		{
 			gui_enabled = !gui_enabled;
@@ -62,6 +72,9 @@ namespace EarlyBird {
 		void UpdateGUIState ()
 		{
 			enabled = !hide_ui && gui_enabled;
+			if (!enabled) {
+				RemoveInputLock ();
+			}
 		}
 
 		void onHideUI ()
@@ -140,12 +153,12 @@ namespace EarlyBird {
 					name + " " + ver,
 					GUILayout.Width (500));
 				if (windowpos.Contains (new Vector2 (Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
-					InputLockManager.SetControlLock ("EB_Flight_window_lock");
+					SetInputLock ();
 				} else {
-					InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
+					RemoveInputLock ();
 				}
 			} else {
-				InputLockManager.RemoveControlLock ("EB_Flight_window_lock");
+				RemoveInputLock ();
 			}
 		}
 	}

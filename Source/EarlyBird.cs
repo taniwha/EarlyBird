@@ -57,21 +57,9 @@ namespace EarlyBird {
 			instance = null;
 		}
 
-		public static void WarpToMorning (double lat, double lon,
-										  CelestialBody body, double offset)
+		public static double TimeToDaylight (double lat, double lon,
+											 CelestialBody body, double offset)
 		{
-			if (FlightDriver.Pause) {
-			 	return;
-			}
-			if (instance.sun == null) {
-				Debug.LogError ("Cannot warp to next morning due to lack of sun");
-				return;
-			}
-
-			if (TimeWarp.fetch.CancelAutoWarp (0)) {
-				return;
-			}
-
 			double rotPeriod, localTime;
 
 			localTime = Sunrise.GetLocalTime (lon, body, instance.sun);
@@ -91,6 +79,25 @@ namespace EarlyBird {
 			double timeOfDawn = 0.5 - dayLength / 2 + offset;
 			double timeToDaylight = rotPeriod * UtilMath.WrapAround(timeOfDawn - localTime, 0, 1);
 			Debug.Log($"[EarlyBird] WarpToMorning: daylight: {dayLength}({dayLength * rotPeriod}), dawn {timeOfDawn}, warpTime: {timeToDaylight}");
+			return timeToDaylight;
+		}
+
+		public static void WarpToMorning (double lat, double lon,
+										  CelestialBody body, double offset)
+		{
+			if (FlightDriver.Pause) {
+			 	return;
+			}
+			if (instance.sun == null) {
+				Debug.LogError ("Cannot warp to next morning due to lack of sun");
+				return;
+			}
+
+			if (TimeWarp.fetch.CancelAutoWarp (0)) {
+				return;
+			}
+
+			double timeToDaylight = TimeToDaylight (lat, lon, body, offset);
 			TimeWarp.fetch.WarpTo (Planetarium.GetUniversalTime () + timeToDaylight, 8, 1);
 		}
 

@@ -23,6 +23,8 @@ using UnityEngine;
 
 using KSP.IO;
 
+using EarlyBird_KACWrapper;
+
 namespace EarlyBird {
 
 	[KSPAddon (KSPAddon.Startup.Flight, false)]
@@ -102,10 +104,29 @@ namespace EarlyBird {
 			GameEvents.onHideUI.Remove (onHideUI);
 			GameEvents.onShowUI.Remove (onShowUI);
 		}
+
+		static bool KACpresent = false;
+		static bool KACinited = false;
 		
 		void Start ()
 		{
+			if (!KACinited) {
+				KACinited = true;
+				KACpresent = KACWrapper.InitKACWrapper();
+			}
 			UpdateGUIState ();
+		}
+
+		void SetKACAlarm (Vessel vessel, double offset)
+		{
+			double timeToDawn = EarlyBird.TimeToDaylight (vessel.latitude,
+														  vessel.longitude,
+														  vessel.mainBody,
+														  DawnOffset);
+			double alarmTime = Planetarium.GetUniversalTime () + timeToDawn;
+			string alarmMessage = "Wake-up call for " + vessel.vesselName;
+			KACWrapper.KAC.CreateAlarm (KACWrapper.KACAPI.AlarmTypeEnum.Raw,
+										alarmMessage, alarmTime);
 		}
 
 		void WindowGUI (int windowID)
@@ -126,6 +147,11 @@ namespace EarlyBird {
 											 vessel.longitude,
 											 vessel.mainBody,
 											 DawnOffset);
+				}
+				if (KACpresent) {
+					if (GUILayout.Button ("Add Alarm")) {
+						SetKACAlarm (vessel, DawnOffset);
+					}
 				}
 				GUILayout.FlexibleSpace ();
 				if (GUILayout.Button ("Close")) {

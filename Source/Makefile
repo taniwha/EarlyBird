@@ -11,6 +11,7 @@ EB_FILES := \
     AssemblyInfo.cs	\
 	EarlyBird.cs \
 	FlightWindow.cs \
+	KACWrapper.cs \
 	Settings.cs \
 	Sunrise.cs \
 	Toolbar.cs \

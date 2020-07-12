@@ -24,7 +24,7 @@ info:
 	@echo "    KSP Data:   ${KSPDIR}"
 
 EarlyBird_icon.png: EarlyBird_icon.svg
-	inkscape --export-width=24 --export-height=24 --export-background='#000000' --export-background-opacity=0 --export-png=$@ $^
+	inkscape --export-width=24 --export-height=24 --export-background='#000000' --export-background-opacity=0 --export-type=png -o $@ $^
 
 clean:
 	rm -f EarlyBird_icon.png
